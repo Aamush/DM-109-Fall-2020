@@ -5,7 +5,7 @@
 
 | Id  | Name |
 | ------------- | ------------- |
-| 62418  | Aamush Siddiqui |
+| <b>62418</b>  | <b>Aamush Siddiqui</b> |
 | 62493  | M. Saad Khan |
 | 61817  | Abdul Rafay |
 
