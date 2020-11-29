@@ -23,6 +23,12 @@ function runFwAlgo() {
 
 	let array2d = [];
 
+	let resultArray = [];
+
+
+	let performanceArray = [];
+	let sizeArray = [];
+
 
 	for (var i = 0; i < 100; i++) {
 
@@ -57,18 +63,18 @@ function runFwAlgo() {
 
 		}
 
-		print(performance.now() + "---> " + height)
+
+		performanceArray.push(performance.now())
+		sizeArray.push(height)
+
 	}
+	var trace1 = {
+		x: performanceArray,
+		y: sizeArray,
+		type: 'scatter'
+	};
 
-}
+	var data = [trace1];
 
-
-function print(reach) {
-
-	var divOutput = document.getElementById('divOutput');
-	let p = document.createElement('p');
-	p.innerHTML = reach;
-	divOutput.appendChild(p)
-
-
+	Plotly.newPlot('myDiv', data);
 }
