@@ -50,124 +50,53 @@ function runFwAlgo() {
 		}
 	}
 
-	var floydWarshall = (function () {
 
-		/**
-		  * Matrix used for the algorithm.
-		  */
-		var dist;
+	console.log(arr2d[0][1])
 
-		/**
-		  * Initialize the distance matrix.
-		  *
-		  * @private
-		  * @param {Array} graph Distance matrix of the array.
-		  * @return {Array} Distance matrix used for the algorithm.
-		  */
-		function init(graph) {
-			var dist = [];
-			var size = graph.length;
-			for (var i = 0; i < size; i += 1) {
-				dist[i] = [];
-				for (var j = 0; j < size; j += 1) {
-					if (i === j) {
-						dist[i][j] = 0;
-					} else if (!isFinite(graph[i][j])) {
-						dist[i][j] = Infinity;
-					} else {
-						dist[i][j] = graph[i][j];
-					}
-				}
+	let reach = arr2d;
+
+
+	for (var i = 0; i < height; i++) {
+
+		for (var j = 0; j < height; j++) {
+
+
+			for (var k = 0; k < height; k++) {
+
+				reach[i][j] = (reach[i][j] != 0) || ((reach[i][k] != 0) && (reach[k][j] != 0)) ? 1 : 0;
+
 			}
-			return dist;
 		}
 
-		return function (graph) {
-			dist = init(graph);
-			var size = graph.length;
-			for (var k = 0; k < size; k += 1) {
-				for (var i = 0; i < size; i += 1) {
-					for (var j = 0; j < size; j += 1) {
-						if (dist[i][j] > dist[i][k] + dist[k][j]) {
-							dist[i][j] = dist[i][k] + dist[k][j];
-						}
-					}
-				}
-			}
-			return dist;
-		};
-	}());
+	}
+	print(height, reach)
+
+}
+
+
+function print(height, reach) {
 
 
 
-	// var distMatrix =
-	// 	[
-	// 		[Infinity, 7, 9, Infinity, Infinity, 16],
-	// 		[7, Infinity, 10, 15, Infinity, Infinity],
-	// 		[9, 10, Infinity, 11, Infinity, 2],
-	// 		[Infinity, 15, 11, Infinity, 6, Infinity],
-	// 		[Infinity, Infinity, Infinity, 6, Infinity, 9],
-	// 		[16, Infinity, 2, Infinity, 9, Infinity]
-	// 	];
 
-	// // console.log(distMatrix);
 
-	var shortestDists = floydWarshall(arr2d);
-
-	console.log(shortestDists)
+	for (var i = 0; i < height; i++) {
+		reach[i][height] = "<br />"
+	}
 
 	var divOutput = document.getElementById('divOutput');
-	divOutput.innerHTML = shortestDists
+	divOutput.innerHTML = reach
 
 
-
+	// for (var i = 0; i < height; i++) {
+	// 	for (var j = 0; j < height; j++) {
+	// 		if (i == j)
+	// 			console.log("1")
+	// 			// process.stdout.write("1")
+	// 		else
+	// 			console.log(reach[i][j] + " ");
+	// 			// process.stdout.write(reach[i][j] + " ")
+	// 	}
+	// 	console.log("--------")
+	// }
 }
-
-function Floyd(roads) {
-	var M = {};
-	for (var i in roads) {
-		M[i] = {};
-		for (var j in roads) {
-			M[i][j] = distance(i, j);
-		}
-	}
-	for (var p in roads) {
-		for (var q in roads) {
-			for (var r in roads) {
-				M[q][r] = Math.min(M[q][r], M[q][p] + M[p][r]);
-			}
-		}
-	}
-	return M;
-}
-
-var roads = {};
-function makeRoad(from, to, length) {
-	function addRoad(from, to) {
-		if (!(from in roads))
-			roads[from] = {};
-		roads[from][to] = length;
-	}
-	addRoad(from, to);
-	addRoad(to, from);
-}
-
-function makeRoads(start) {
-	for (var i = 1; i < arguments.length; i += 2)
-		makeRoad(start, arguments[i], arguments[i + 1]);
-}
-
-// Direct distance.
-function distance(from, to) {
-	if (from === to) {
-		return 0;
-	}
-	if (roads[from][to] !== undefined) {
-		return roads[from][to];
-	}
-	return Number.POSITIVE_INFINITY;
-}
-
-	//Mention reference where you got the solution
-	//Ref: http:// 
-	//Ref: If you found any paper
